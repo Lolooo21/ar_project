@@ -28,6 +28,18 @@ PrefabInstance:
       propertyPath: m_AffordanceThemeDatum.m_Variable
       value: 
       objectReference: {fileID: 11400000, guid: 1e7f6f70c50e3864789127de6b014097, type: 2}
+    - target: {fileID: 5507342232777092001, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109682686697656314, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109682686697656314, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7109682686697656316, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -75,5 +87,45 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7109682686697656319, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4609535036242455122}
   m_SourcePrefab: {fileID: 100100000, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
+--- !u!23 &2026983599962495497 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1499404406695200139, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
+  m_PrefabInstance: {fileID: 643942751703375746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &7657548977611231352 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 7109682686697656314, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
+  m_PrefabInstance: {fileID: 643942751703375746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7657548977611231357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7109682686697656319, guid: 5642b79498b10465fa9219ba4682355b, type: 3}
+  m_PrefabInstance: {fileID: 643942751703375746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4609535036242455122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7657548977611231357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13173df27406a364dbc6708b5c79a1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetVivant
+  layerSol:
+    serializedVersion: 2
+    m_Bits: 1
+  layerVivant:
+    serializedVersion: 2
+    m_Bits: 64
+  vivantConf: {fileID: 11400000, guid: 0b2a7af00c785554791a224ec4cc9094, type: 2}
+  pyramidConf: {fileID: 11400000, guid: 9fbe159c2e54f69468256d0eb64d8fdc, type: 2}
+  renderer: {fileID: 2026983599962495497}
+  rb: {fileID: 7657548977611231352}

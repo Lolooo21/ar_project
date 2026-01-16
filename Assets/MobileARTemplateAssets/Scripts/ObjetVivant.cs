@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class ObjetVivant : MonoBehaviour
@@ -7,6 +8,7 @@ public class ObjetVivant : MonoBehaviour
     public LayerMask layerVivant;
     
     public VivantConf vivantConf;
+    
     public MeshRenderer renderer;
 
     public Rigidbody rb;
@@ -54,6 +56,12 @@ public class ObjetVivant : MonoBehaviour
             _jumpTimer = GetJumpInterval();
             float jumpForce = GetJumpForce();
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
+        if (transform.position.y < 0)
+        {
+            print("destroy !!");
+            Destroy(gameObject);
         }
     }
 
