@@ -141,6 +141,8 @@ public class ObjetVivant : MonoBehaviour
         {
             print("mangé");
             Destroy(_foodTarget.parent.gameObject);
+            transform.localScale = Vector3.one * vivantConf.grossir;
+            
             _foodTarget = null;
             return false;
         }

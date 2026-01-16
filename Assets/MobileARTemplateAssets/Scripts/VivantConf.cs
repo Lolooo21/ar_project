@@ -28,5 +28,6 @@ public class VivantConf : ScriptableObject
     [Header("Nourriture")]
     public float rayonNourriture;
     public float distanceNourriture;
+    public float grossir;
 
 }
