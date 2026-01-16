@@ -23,3 +23,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 279920179c318f94996d0b06e545163a, type: 2}
   - {fileID: 2100000, guid: 90bfb1c99b8dd6b49bc04d891edaf15c, type: 2}
   - {fileID: 2100000, guid: b16ac9d1b4c2a0f448052dc0e7d160b9, type: 2}
+  rayonMovement: {x: 0.1, y: 0.5}
+  tempsAttente: {x: 1, y: 3}
+  stopMouvement: 0.2
+  acceleration: 10
+  vitesseMax: 0.5
+  tempsSaut: 0
+  vitesseSaut: 20
+  tempsSautRandom: {x: 1, y: 4}
+  forceSautRandom: {x: 0, y: 0}
+  rayonNourriture: 1

@@ -10,7 +10,7 @@ public class VivantConf : ScriptableObject
     public List<Material> materiauxRandom = new();
     
     [Header("Mouvements")]
-    public float rayonMovement;
+    public Vector2 rayonMovement;
 
     public Vector2 tempsAttente;
     public float stopMouvement;
@@ -25,5 +25,8 @@ public class VivantConf : ScriptableObject
     public Vector2 tempsSautRandom;
     public Vector2 forceSautRandom;
 
+    [Header("Nourriture")]
+    public float rayonNourriture;
+    public float distanceNourriture;
 
 }

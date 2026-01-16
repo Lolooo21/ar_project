@@ -14,11 +14,13 @@ public class ObjetVivant : MonoBehaviour
     private Vector3 _target;
     private float _targetTimer;
     private float _jumpTimer;
+    private Transform _foodTarget;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _target = transform.position;
         float random = Random.value;
         float randomSize = Mathf.Lerp(vivantConf.tailleRandom.x, vivantConf.tailleRandom.y, random);
         transform.localScale = Vector3.one * randomSize;
@@ -31,6 +33,11 @@ public class ObjetVivant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (HandleFood())
+        {
+            return;
+        }
+
         _targetTimer -= Time.deltaTime;
         if (_targetTimer <= 0f)
         {
@@ -40,21 +47,31 @@ public class ObjetVivant : MonoBehaviour
                 _target = t;
             }
         }
+        
+        _jumpTimer -= Time.fixedDeltaTime;
+        if (_jumpTimer <= 0f && IsGrounded())
+        {
+            _jumpTimer = GetJumpInterval();
+            float jumpForce = GetJumpForce();
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 
     bool tryPickTarget(out Vector3 t)
     {
         for (int i = 0; i < 20; i++)
         {
-            Vector3 p = transform.position + 
-                        new Vector3(Random.Range(-vivantConf.rayonMovement,vivantConf.rayonMovement),
-                            2f,Random.Range(-vivantConf.rayonMovement,vivantConf.rayonMovement));
+            float mouvementX = Random.Range(vivantConf.rayonMovement.x, vivantConf.rayonMovement.y) *
+                               (Random.value < 0.5f ? -1f : 1f);
+            float mouvementZ = Random.Range(vivantConf.rayonMovement.x, vivantConf.rayonMovement.y) *
+                               (Random.value < 0.5f ? -1f : 1f);
+            Vector3 p = transform.position + new Vector3(mouvementX, 2f, mouvementZ);
             if (!Physics.Raycast(p, Vector3.down, out var hit, 10f, layerSol))
             {
                 continue;
             }
 
-            if (!Physics.SphereCast(p,0.5f,Vector3.down,out hit,10f,layerVivant))
+            if (Physics.SphereCast(p,0.5f,Vector3.down,out var hit2,10f,layerVivant))
             {
                 continue;
             }
@@ -69,7 +86,8 @@ public class ObjetVivant : MonoBehaviour
     {
         var to = (_target - rb.position);
         to.y = 0f;
-        if (to.magnitude <= vivantConf.stopMouvement)
+        float stopDistance = _foodTarget != null ? vivantConf.distanceNourriture : vivantConf.stopMouvement;
+        if (to.magnitude <= stopDistance)
         {
             rb.linearVelocity = Vector3.zero;
         }
@@ -79,13 +97,7 @@ public class ObjetVivant : MonoBehaviour
             rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, vivantConf.vitesseMax);
         }
 
-        _jumpTimer -= Time.fixedDeltaTime;
-        if (_jumpTimer <= 0f && IsGrounded())
-        {
-            _jumpTimer = GetJumpInterval();
-            float jumpForce = GetJumpForce();
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        
     }
 
     private bool IsGrounded()
@@ -109,5 +121,43 @@ public class ObjetVivant : MonoBehaviour
             return Random.Range(vivantConf.forceSautRandom.x, vivantConf.forceSautRandom.y);
         }
         return vivantConf.vitesseSaut;
+    }
+
+    private bool HandleFood()
+    {
+        if (_foodTarget ==null && TryFindFood(out var food))
+        {
+            _foodTarget = food;
+        }
+
+        if (_foodTarget ==null)
+        {
+            return false;
+        }
+
+        _target = _foodTarget.position;
+        float foodDistance = Vector3.Distance(transform.position, _target);
+        if (foodDistance <= vivantConf.distanceNourriture)
+        {
+            print("mangé");
+            Destroy(_foodTarget.parent.gameObject);
+            _foodTarget = null;
+            return false;
+        }
+
+        return true;
+    }
+
+    bool TryFindFood(out Transform food)
+    {
+        foreach (var col in Physics.OverlapSphere(transform.position, vivantConf.rayonNourriture))
+        {
+            if(!col.CompareTag("Nourriture"))
+                continue;
+            food = col.transform;
+            return true;
+        }
+        food = null;
+        return false;
     }
 }
